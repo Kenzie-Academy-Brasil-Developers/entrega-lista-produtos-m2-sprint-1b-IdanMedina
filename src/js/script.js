@@ -33,6 +33,8 @@ function CriarCard(elemento) {
   valor.innerText = `R$ ${elemento.preco},00`;
 }
 
+produtos.forEach(CriarCard)
+
 function SetTodosProdutos() {
   botaoTodos.addEventListener("click", () => {
     vitrine.innerHTML = "";
