@@ -130,7 +130,7 @@ border-radius: 50px 0;
 width: 100%;
 }
 
-.containerListaProdutos ul {
+.listaProdutos {
 list-style: none;
 display: flex;
 flex-wrap: wrap;
@@ -139,35 +139,35 @@ margin-top: 40px;
 width: 90%;
 }
 
-.containerListaProdutos ul li {
+.card {
 border-radius: 8px;
 transition: ease-in-out 0.1s;
 width: calc(95% / 4);
 margin-bottom: 30px;
 }
 
-.containerListaProdutos ul li:hover {
+.card :hover {
 box-shadow: 3px 3px 13px 1px rgb(146 146 146);
 }
 
-.containerListaProdutos ul li img {
+.img {
 width: 100%;
 }
 
-.containerListaProdutos ul li h3 {
+.nome {
 font-size: 1rem;
 font-weight: 500;
 margin: 10px 0 15px;
 color: #212529;
 }
 
-.containerListaProdutos ul li p {
+.secao {
 font-size: 0.7rem;
 color: #868e96;
 font-weight: 400;
 margin: 10px 0;
 }
-.containerListaProdutos ul li span {
+.preco {
 font-size: 0.8rem;
 font-weight: 500;
 margin-top: 10px;
