@@ -98,7 +98,7 @@ function Pesquisa() {
     vitrine.innerHTML = "";
     let accValor = [];
     produtos.forEach((elemento) => {
-      if (inputPesquisa.value == elemento.nome) {
+      if (inputPesquisa.value == elemento.nome.toLowerCase()) {
         accValor.push(elemento.preco);
         CriarCard(elemento);
       }
