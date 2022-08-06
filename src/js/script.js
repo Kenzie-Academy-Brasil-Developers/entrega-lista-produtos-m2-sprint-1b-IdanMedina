@@ -13,34 +13,60 @@ function CriarCard(elemento) {
   let imagem = document.createElement("img");
   let titulo = document.createElement("h3");
   let setor = document.createElement("p");
+  let nutriList = document.createElement("ol");
+  let aquisicao = document.createElement("div");
   let valor = document.createElement("span");
+  let comprar = document.createElement("button");
 
   card.classList.add("card");
   imagem.classList.add("img");
   titulo.classList.add("nome");
   setor.classList.add("secao");
+  nutriList.classList.add("nutriList");
+  aquisicao.classList.add("aquisicao");
   valor.classList.add("preco");
-
-  vitrine.appendChild(card);
-  card.appendChild(imagem);
-  card.appendChild(titulo);
-  card.appendChild(setor);
-  card.appendChild(valor);
+  comprar.classList.add("comprar");
 
   imagem.src = elemento.img;
   titulo.innerText = `${elemento.nome}`;
   setor.innerText = `${elemento.secao}`;
-  valor.innerText = `R$ ${elemento.preco},00`;
+  valor.innerText = `R$ ${elemento.preco}`;
+  comprar.innerText = "Comprar"
+  
+  card.appendChild(imagem);
+  card.appendChild(titulo);
+  card.appendChild(setor);
+  card.appendChild(nutriList);
+  card.appendChild(aquisicao);
+  aquisicao.appendChild(valor);
+  aquisicao.appendChild(comprar);
+
+  for(let nutriente = 0; nutriente < elemento.componentes.length; nutriente++){
+    let nutri = document.createElement("li");
+    nutri.classList.add("nutrientes");
+    let valorNutri = elemento.componentes[nutriente]
+    nutri.innerText = `${valorNutri}`
+    nutriList.appendChild(nutri)
+  }
+
+  vitrine.appendChild(card);
+}
+produtos.forEach(CriarCard)
+ 
+
+function Soma(acumulador, indexAtual) {
+  return acumulador + indexAtual;
 }
 
-produtos.forEach(CriarCard)
 
 function SetTodosProdutos() {
+  
   botaoTodos.addEventListener("click", () => {
     vitrine.innerHTML = "";
     let accValor = [];
     produtos.forEach((elemento) => {
-      accValor.push(elemento.preco);
+      let precoNum = parseFloat(elemento.preco)
+      accValor.push(precoNum);
       CriarCard(elemento);
     });
     precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
@@ -54,7 +80,9 @@ function SetHortifruti() {
     let accValor = [];
     produtos.forEach((elemento) => {
       if (elemento.secao == "Hortifruti") {
-        accValor.push(elemento.preco);
+        console.log(elemento)
+        let precoNum = parseFloat(elemento.preco)
+        accValor.push(precoNum);
         CriarCard(elemento);
       }
       precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
@@ -69,7 +97,8 @@ function SetPanificadora() {
     let accValor = [];
     produtos.forEach((elemento) => {
       if (elemento.secao == "Panificadora") {
-        accValor.push(elemento.preco);
+        let precoNum = parseFloat(elemento.preco)
+      accValor.push(precoNum);
         CriarCard(elemento);
       }
       precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
@@ -83,8 +112,9 @@ function SetLaticinios() {
     vitrine.innerHTML = "";
     let accValor = [];
     produtos.forEach((elemento) => {
-      if (elemento.secao == "Laticínio") {
-        accValor.push(elemento.preco);
+      if (elemento.secao == "Laticinio") {
+        let precoNum = parseFloat(elemento.preco)
+      accValor.push(precoNum);
         CriarCard(elemento);
       }
       precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
@@ -99,7 +129,22 @@ function Pesquisa() {
     let accValor = [];
     produtos.forEach((elemento) => {
       if (inputPesquisa.value == elemento.nome.toLowerCase()) {
-        accValor.push(elemento.preco);
+        let precoNum = parseFloat(elemento.preco)
+      accValor.push(precoNum);
+        CriarCard(elemento);
+      }
+      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
+
+      if (inputPesquisa.value == elemento.categoria.toLowerCase()) {
+        let precoNum = parseFloat(elemento.preco)
+      accValor.push(precoNum);
+        CriarCard(elemento);
+      }
+      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
+
+      if (inputPesquisa.value == elemento.secao.toLowerCase()) {
+        let precoNum = parseFloat(elemento.preco)
+      accValor.push(precoNum);
         CriarCard(elemento);
       }
       precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
@@ -107,7 +152,3 @@ function Pesquisa() {
   });
 }
 Pesquisa();
-
-function Soma(acumulador, indexAtual) {
-  return acumulador + indexAtual;
-}

@@ -146,7 +146,7 @@ width: calc(95% / 4);
 margin-bottom: 30px;
 }
 
-.card :hover {
+.card:hover img{
 box-shadow: 3px 3px 13px 1px rgb(146 146 146);
 }
 
@@ -174,17 +174,17 @@ margin-top: 10px;
 display: inline-block;
 color: #212529;
 }
-.containerListaProdutos ul li ol {
+.nutriList {
 list-style: decimal;
 color: #868e96;
 font-size: 12px;
 margin-left: 15px;
 }
-.containerListaProdutos ul li ol li {
+.nutrientes {
 margin: 0;
 width: 100%;
 }
-.containerListaProdutos ul li button {
+.comprar {
 background-color: #12b8860d;
 border-radius: 8px;
 border: #12b8860d 1px solid;
@@ -192,12 +192,12 @@ color: #12b886;
 padding: 5px;
 transition: 0.5s;
 }
-.containerListaProdutos ul li button:hover {
+.card:hover div button  {
 background-color: #12b886;
 border: #12b886 1px solid;
 color: white;
 }
-.containerListaProdutos ul li div {
+.aquisicao {
 display: flex;
 justify-content: space-between;
 padding: 5px;
