@@ -1,14 +1,18 @@
 const vitrine = document.querySelector(".listaProdutos");
+const arrayCompras = [];
+
 let botaoTodos = document.querySelector("#todos");
 let botaoHortifruti = document.querySelector("#horti");
 let botaoPanificadora = document.querySelector("#pani");
 let botaoLaticinios = document.querySelector("#lati");
 let botaoPesquisa = document.querySelector("#lente");
 let inputPesquisa = document.querySelector(".campoBuscaPorNome");
-let precoTotal = document.querySelector("#nulo");
-precoTotal.innerText = `R$ 0.00`;
+let cestaDeCompras = document.querySelector(".cesta");
+let logoCesta = document.querySelector(".cestinha");
+let textoCesta = document.querySelector("#textoCesta");
+let aside = document.querySelector(".asideCompras");
 
-function CriarCard(elemento) {
+function criarCard(elemento) {
   let card = document.createElement("li");
   let imagem = document.createElement("img");
   let titulo = document.createElement("h3");
@@ -32,7 +36,25 @@ function CriarCard(elemento) {
   setor.innerText = `${elemento.secao}`;
   valor.innerText = `R$ ${elemento.preco}`;
   comprar.innerText = "Comprar"
-  
+  comprar.type = "submit";
+
+  comprar.addEventListener("click", () =>{
+    arrayCompras.unshift(elemento);
+    cestaDeCompras.innerHTML = "";
+    cestaDeCompras.classList.add("cestaCheia");
+    addCarrinho(arrayCompras);
+
+    if(arrayCompras.length <= 1){  
+      criarPreco(); 
+      calcularPreco(arrayCompras);
+    }
+    
+    let totalValue = document.querySelector(".totalValue");
+    let quantValue = document.querySelector(".quantValue");  
+    quantValue.innerText = `${arrayCompras.length}`;
+    totalValue.innerText = `${calcularPreco(arrayCompras)}`;
+  })
+
   card.appendChild(imagem);
   card.appendChild(titulo);
   card.appendChild(setor);
@@ -51,104 +73,180 @@ function CriarCard(elemento) {
 
   vitrine.appendChild(card);
 }
-produtos.forEach(CriarCard)
+produtos.forEach(criarCard)
  
 
-function Soma(acumulador, indexAtual) {
+function soma(acumulador, indexAtual) {
   return acumulador + indexAtual;
 }
 
+/* function subtrai(acumulador, indexAtual){
+  return acumulador - indexAtual
+} */
 
-function SetTodosProdutos() {
+function setTodosProdutos() {
   
   botaoTodos.addEventListener("click", () => {
     vitrine.innerHTML = "";
-    let accValor = [];
     produtos.forEach((elemento) => {
-      let precoNum = parseFloat(elemento.preco)
-      accValor.push(precoNum);
-      CriarCard(elemento);
+      criarCard(elemento);
     });
-    precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
   });
 }
-SetTodosProdutos();
+setTodosProdutos();
 
-function SetHortifruti() {
+function setHortifruti() {
   botaoHortifruti.addEventListener("click", () => {
     vitrine.innerHTML = "";
-    let accValor = [];
     produtos.forEach((elemento) => {
       if (elemento.secao == "Hortifruti") {
-        console.log(elemento)
-        let precoNum = parseFloat(elemento.preco)
-        accValor.push(precoNum);
-        CriarCard(elemento);
+        criarCard(elemento);
       }
-      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
     });
   });
 }
-SetHortifruti();
+setHortifruti();
 
-function SetPanificadora() {
+function setPanificadora() {
   botaoPanificadora.addEventListener("click", () => {
     vitrine.innerHTML = "";
-    let accValor = [];
     produtos.forEach((elemento) => {
       if (elemento.secao == "Panificadora") {
-        let precoNum = parseFloat(elemento.preco)
-      accValor.push(precoNum);
-        CriarCard(elemento);
+        criarCard(elemento);
       }
-      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
     });
   });
 }
-SetPanificadora();
+setPanificadora();
 
-function SetLaticinios() {
+function setLaticinios() {
   botaoLaticinios.addEventListener("click", () => {
     vitrine.innerHTML = "";
-    let accValor = [];
     produtos.forEach((elemento) => {
       if (elemento.secao == "Laticinio") {
-        let precoNum = parseFloat(elemento.preco)
-      accValor.push(precoNum);
-        CriarCard(elemento);
+        criarCard(elemento);
       }
-      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
     });
   });
 }
-SetLaticinios();
+setLaticinios();
 
-function Pesquisa() {
+function pesquisa() {
   botaoPesquisa.addEventListener("click", () => {
     vitrine.innerHTML = "";
-    let accValor = [];
     produtos.forEach((elemento) => {
-      if (inputPesquisa.value == elemento.nome.toLowerCase()) {
-        let precoNum = parseFloat(elemento.preco)
-      accValor.push(precoNum);
-        CriarCard(elemento);
+      if (inputPesquisa.value == elemento.nome.toLowerCase() || inputPesquisa.value == elemento.categoria.toLowerCase() || inputPesquisa.value == elemento.secao.toLowerCase() || inputPesquisa.value == elemento.nome.toUpperCase() || inputPesquisa.value == elemento.categoria.toUpperCase() || inputPesquisa.value == elemento.secao.toUpperCase()) {
+        criarCard(elemento);
       }
-      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
-
-      if (inputPesquisa.value == elemento.categoria.toLowerCase()) {
-        let precoNum = parseFloat(elemento.preco)
-      accValor.push(precoNum);
-        CriarCard(elemento);
-      }
-      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
-
-      if (inputPesquisa.value == elemento.secao.toLowerCase()) {
-        let precoNum = parseFloat(elemento.preco)
-      accValor.push(precoNum);
-        CriarCard(elemento);
-      }
-      precoTotal.innerText = `R$ ${accValor.reduce(Soma, 0).toFixed(2)}`;
     });
   });
 }
-Pesquisa();
+pesquisa();
+
+function addCarrinho(produtos) {
+    produtos.forEach((produto) =>{
+    let cardCompra = document.createElement("li");
+    let imagemCompra = document.createElement("img");
+    let infoCompra = document.createElement("div");
+    let nomeCompra = document.createElement("p");
+    let secaoCompra = document.createElement("p");
+    let precoCompra = document.createElement("span");
+    let removeCompra = document.createElement("button");
+    let lixeira = document.createElement("img");
+
+    cestaDeCompras.classList.add("cestaCheia")
+    cardCompra.classList.add("cardCompra")
+    imagemCompra.classList.add("imgCompra")
+    infoCompra.classList.add("infoCompra")
+    nomeCompra.classList.add("nomeCompra")
+    secaoCompra.classList.add("secaoCompra")
+    precoCompra.classList.add("precoCompra")
+    removeCompra.classList.add("removeCompra")
+
+    imagemCompra.src = produto.img;
+    nomeCompra.innerText = `${produto.nome}`;
+    secaoCompra.innerText = `${produto.secao}`;
+    precoCompra.innerText = `R$ ${produto.preco}`;
+    removeCompra.type = "submit";
+    removeCompra.id = produto.id;
+    lixeira.id = produto.id;
+    lixeira.src = "./src/img/trash.png";
+
+    cestaDeCompras.appendChild(cardCompra);
+    cardCompra.appendChild(imagemCompra);
+    cardCompra.appendChild(infoCompra);
+    infoCompra.appendChild(nomeCompra);
+    infoCompra.appendChild(secaoCompra);
+    infoCompra.appendChild(precoCompra);
+    cardCompra.appendChild(removeCompra);
+    removeCompra.appendChild(lixeira);
+
+    removeCompra.addEventListener("click", (element) => {
+      let index = arrayCompras.findIndex((item) => item.id == element.target.id)
+      console.log(arrayCompras)
+      console.log(index)
+      arrayCompras.splice(index,1);
+      console.log(arrayCompras)
+      cardCompra.remove();
+      calcularPreco(arrayCompras);
+
+      let totalValue = document.querySelector(".totalValue");
+      let quantValue = document.querySelector(".quantValue");  
+      quantValue.innerText = `${arrayCompras.length}`;
+      totalValue.innerText = `${calcularPreco(arrayCompras)}`;
+
+      if(arrayCompras.length == 0){
+        cestaDeCompras.innerHTML =""
+        cestaDeCompras.classList.remove("cestaCheia");
+        cestaDeCompras.classList.add("cesta");
+        cestaDeCompras.appendChild(logoCesta);
+        cestaDeCompras.appendChild(textoCesta);
+        removerPreco();
+      }
+    })
+    })
+}
+
+function criarPreco(){
+  let quantidade = document.createElement("div");
+  let total = document.createElement("div");
+  let quantText = document.createElement("p");
+  let quantValue = document.createElement("p");
+  let totalText = document.createElement("p");
+  let totalValue = document.createElement("span");
+
+  quantidade.classList.add("quantidade");
+  total.classList.add("total");
+  quantText.classList.add("quantText");
+  quantValue.classList.add("quantValue");
+  totalText.classList.add("totalText");
+  totalValue.classList.add("totalValue");
+
+  aside.appendChild(quantidade);
+  aside.appendChild(total);
+  quantidade.appendChild(quantText);
+  quantidade.appendChild(quantValue);
+  total.appendChild(totalText);
+  total.appendChild(totalValue);
+
+  quantText.innerText = "Quantidade";
+  totalText.innerText = "Total";
+}
+
+function removerPreco(){
+  let quantidade = document.querySelector(".quantidade");
+  let total = document.querySelector(".total");
+ 
+  aside.removeChild(quantidade);
+  aside.removeChild(total);
+}
+
+function calcularPreco(array){
+let accValor = []
+array.forEach((element) => {
+let precoNum = parseFloat(element.preco)
+accValor.push(precoNum)}
+)
+let valorFinal = accValor.reduce(soma, 0).toFixed(2)
+return valorFinal
+}

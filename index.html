@@ -17,11 +17,11 @@
   </head>
   <body>
     <!-- CABEÇALHO -->
-    <header>
+    <header class="header">
       <h1>Shop now</h1>
     </header>
     <!-- PARTE PRINCIPAL -->
-    <main>
+    <main class = "main">
       <section class="filtersContainer">
         <div id="botoesContainer">
           <button id="todos"  class="estiloGeralBotoes estiloGeralBotoes--filter">
@@ -52,38 +52,24 @@
           </button>
         </div>
       </section>
-      <section class="priceContainer">
-        <div>
-            <img src="./src/img/alert-circle.png" alt="exclamação de alerta">
-            <p>Valor total dos produtos da sessão selecionada</p>
-        </div>
-        <span id="nulo"></span>
-      </section>
-      <!-- CONTAINER DE PRODUTOS -->
+        <!-- CONTAINER DE PRODUTOS -->
+      <section class="containerCompras">
       <section class="containerVitrine">
         <div class="containerListaProdutos">
          <ul class="listaProdutos">
-                    <!-- Utilize esse item html como template para a construção da lista de produtos
-                    
-                    Você pode remover esses comentários depois que fizer a construção pelo DOM -->
-                    
-            
-                    <!-- <li>
-                        <img src="./src/img/maça.png" alt="Imagem maçã">
-                        <h3>Maçã</h3>
-                        <span>Hortifruti</span>
-                        <ol>
-                          <li></li>
-                        </ol>
-                        <div>
-                        <p>R$ 2.00</p>
-                        <button>Comprar</button>
-                        </div>
-                    </li> -->
-                    
-                </ul>
+         </ul>
         </div>
       </section>
+      <aside class="asideCompras">
+        <div class="carrinhoCompras">
+          <p class="carrinhoTexto"><img src="./src/img/carrinho.png" alt="Carrinho de compras" class="carrinhoLogo"></img>Carrinho</p>
+        </div>
+        <div class="cesta">
+          <img src="./src/img/shopping-bag.png" alt="cesta de compras" class="cestinha"></img>
+          <p id ="textoCesta">Por enquanto não temos produtos no carrinho</p>
+        </div>
+      </aside>
+    </section>
     </main>
     <script src="src/js/dataProdutos.js"></script>
     <script src="./src/js/script.js"></script>
